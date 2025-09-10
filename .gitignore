@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+data/
+_kaggle_tmp/
+.env
+.vscode/
