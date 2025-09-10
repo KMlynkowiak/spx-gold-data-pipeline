@@ -23,8 +23,12 @@ def main():
     gspc["daily_return"] = gspc["Adj_Close"].pct_change()
     gold["daily_return"] = gold["Adj_Close"].pct_change()
 
-    gspc["vol_30d"] = gspc["daily_return"].rolling(30).std()
-    gold["vol_30d"] = gold["daily_return"].rolling(30).std()
+    gspc["vol_30d"] = gspc["daily_return"].rolling(30, min_periods=10).std()
+    gold["vol_30d"] = gold["daily_return"].rolling(30, min_periods=10).std()
+
+    gspc["price_norm"] = gspc["Adj_Close"] / gspc["Adj_Close"].iloc[0] * 100
+    gold["price_norm"] = gold["Adj_Close"] / gold["Adj_Close"].iloc[0] * 100
+    corr = gspc["daily_return"].rolling(30, min_periods=10).corr(gold["daily_return"])
 
     gspc["vol_30d_ann"] = gspc["vol_30d"] * (252**0.5)
     gold["vol_30d_ann"] = gold["vol_30d"] * (252**0.5)
